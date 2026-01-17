@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.restos.controller.AdminDashboardController"
+    stylesheets="@../../css/main.css, @../../css/dashboard.css">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" spacing="8" prefWidth="260">
+            <padding>
+                <Insets top="20" right="16" bottom="20" left="16" />
+            </padding>
+
+            <!-- Logo Section -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="sidebar-header">
+                <Label text="🍽️" style="-fx-font-size: 32px;" />
+                <VBox spacing="2">
+                    <Label text="RESTOS" styleClass="sidebar-logo" />
+                    <Label text="Admin Panel" styleClass="sidebar-subtitle" />
+                </VBox>
+            </HBox>
+
+            <VBox prefHeight="24" />
+
+            <!-- Navigation Menu -->
+            <VBox spacing="4" styleClass="nav-menu">
+                <Button fx:id="navDashboard" text="📊  Dashboard"
+                    styleClass="nav-btn, nav-btn-active"
+                    onAction="#showDashboard" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navMenu" text="🍔  Menu" styleClass="nav-btn"
+                    onAction="#showMenuManagement" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navTable" text="🪑  Meja" styleClass="nav-btn"
+                    onAction="#showTableManagement" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navUser" text="👥  Pengguna" styleClass="nav-btn"
+                    onAction="#showUserManagement" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navInventory" text="📦  Inventaris" styleClass="nav-btn"
+                    onAction="#showInventoryManagement" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navReport" text="📈  Laporan" styleClass="nav-btn"
+                    onAction="#showReports" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            </VBox>
+
+            <!-- Spacer -->
+            <Region VBox.vgrow="ALWAYS" />
+
+            <!-- User Info & Logout -->
+            <VBox spacing="12" styleClass="sidebar-footer">
+                <Separator />
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <StackPane styleClass="avatar">
+                        <Circle radius="20" styleClass="avatar-circle" />
+                        <Label fx:id="avatarLabel" text="A" styleClass="avatar-text" />
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="userNameLabel" text="Admin" styleClass="user-name" />
+                        <Label fx:id="userRoleLabel" text="Administrator" styleClass="user-role" />
+                    </VBox>
+                </HBox>
+                <Button text="🚪  Keluar" styleClass="nav-btn, logout-btn"
+                    onAction="#handleLogout" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <VBox styleClass="main-content">
+            <padding>
+                <Insets top="24" right="32" bottom="24" left="32" />
+            </padding>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="content-header">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label fx:id="pageTitle" text="Dashboard" styleClass="heading-1" />
+                    <Label fx:id="pageSubtitle" text="Selamat datang di Admin Panel"
+                        styleClass="subtitle" />
+                </VBox>
+                <Label fx:id="dateTimeLabel" text="17 Januari 2026, 10:30"
+                    styleClass="datetime-label" />
+            </HBox>
+
+            <VBox prefHeight="24" />
+
+            <!-- Content Container - Will be swapped based on navigation -->
+            <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS">
+                <!-- Dashboard Content (Default) -->
+                <VBox fx:id="dashboardContent" spacing="24">
+
+                    <!-- Stats Cards Row -->
+                    <HBox spacing="20">
+                        <!-- Revenue Card -->
+                        <VBox styleClass="stat-card, stat-card-primary" HBox.hgrow="ALWAYS">
+                            <Label text="💰" styleClass="stat-icon" />
+                            <Label text="Pendapatan Hari Ini" styleClass="stat-label" />
+                            <Label fx:id="revenueLabel" text="Rp 0" styleClass="stat-value" />
+                            <Label fx:id="revenueChangeLabel" text="+0% dari kemarin"
+                                styleClass="stat-change" />
+                        </VBox>
+
+                        <!-- Orders Card -->
+                        <VBox styleClass="stat-card, stat-card-success" HBox.hgrow="ALWAYS">
+                            <Label text="🛒" styleClass="stat-icon" />
+                            <Label text="Total Pesanan" styleClass="stat-label" />
+                            <Label fx:id="ordersLabel" text="0" styleClass="stat-value" />
+                            <Label fx:id="ordersChangeLabel" text="+0 pesanan baru"
+                                styleClass="stat-change" />
+                        </VBox>
+
+                        <!-- Tables Card -->
+                        <VBox styleClass="stat-card, stat-card-warning" HBox.hgrow="ALWAYS">
+                            <Label text="🪑" styleClass="stat-icon" />
+                            <Label text="Meja Terisi" styleClass="stat-label" />
+                            <Label fx:id="tablesLabel" text="0/0" styleClass="stat-value" />
+                            <Label fx:id="tablesChangeLabel" text="0 tersedia"
+                                styleClass="stat-change" />
+                        </VBox>
+
+                        <!-- Pending Orders Card -->
+                        <VBox styleClass="stat-card, stat-card-danger" HBox.hgrow="ALWAYS">
+                            <Label text="⏳" styleClass="stat-icon" />
+                            <Label text="Pesanan Pending" styleClass="stat-label" />
+                            <Label fx:id="pendingLabel" text="0" styleClass="stat-value" />
+                            <Label fx:id="pendingChangeLabel" text="Menunggu diproses"
+                                styleClass="stat-change" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- Charts and Recent Orders Row -->
+                    <HBox spacing="20" VBox.vgrow="ALWAYS">
+                        <!-- Recent Orders -->
+                        <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="16">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="📋 Pesanan Terbaru" styleClass="heading-3"
+                                    HBox.hgrow="ALWAYS" />
+                                <Button text="Lihat Semua" styleClass="btn, btn-sm, btn-secondary"
+                                    onAction="#viewAllOrders" />
+                            </HBox>
+                            <TableView fx:id="recentOrdersTable" VBox.vgrow="ALWAYS"
+                                styleClass="orders-table">
+                                <columns>
+                                    <TableColumn fx:id="orderIdColumn" text="ID" prefWidth="60" />
+                                    <TableColumn fx:id="orderTableColumn" text="Meja" prefWidth="80" />
+                                    <TableColumn fx:id="orderCustomerColumn" text="Pelanggan"
+                                        prefWidth="120" />
+                                    <TableColumn fx:id="orderTotalColumn" text="Total"
+                                        prefWidth="120" />
+                                    <TableColumn fx:id="orderStatusColumn" text="Status"
+                                        prefWidth="100" />
+                                    <TableColumn fx:id="orderTimeColumn" text="Waktu"
+                                        prefWidth="100" />
+                                </columns>
+                                <placeholder>
+                                    <Label text="Tidak ada pesanan terbaru"
+                                        styleClass="text-secondary" />
+                                </placeholder>
+                            </TableView>
+                        </VBox>
+
+                        <!-- Quick Stats / Popular Items -->
+                        <VBox styleClass="card" prefWidth="320" spacing="16">
+                            <Label text="🔥 Menu Populer Hari Ini" styleClass="heading-3" />
+                            <VBox fx:id="popularMenusContainer" spacing="12">
+                                <!-- Will be populated dynamically -->
+                                <Label text="Memuat data..." styleClass="text-secondary" />
+                            </VBox>
+
+                            <Separator />
+
+                            <Label text="⚡ Aksi Cepat" styleClass="heading-3" />
+                            <VBox spacing="8">
+                                <Button text="➕ Tambah Menu Baru"
+                                    styleClass="btn, btn-primary, btn-sm"
+                                    maxWidth="Infinity" onAction="#addNewMenu" />
+                                <Button text="🪑 Kelola Meja"
+                                    styleClass="btn, btn-secondary, btn-sm"
+                                    maxWidth="Infinity" onAction="#showTableManagement" />
+                                <Button text="👤 Tambah Pengguna"
+                                    styleClass="btn, btn-secondary, btn-sm"
+                                    maxWidth="Infinity" onAction="#addNewUser" />
+                            </VBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>

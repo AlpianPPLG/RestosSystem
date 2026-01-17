@@ -1,0 +1,337 @@
+/*
+ * Restos Desktop - Dashboard Stylesheet
+ */
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 0 1px 0 0;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 2, 0);
+}
+
+.sidebar-header {
+  -fx-padding: 8px 0 16px 0;
+}
+
+.sidebar-logo {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #f97316;
+}
+
+.sidebar-subtitle {
+  -fx-font-size: 12px;
+  -fx-text-fill: #9ca3af;
+}
+
+/* ===== NAVIGATION BUTTONS ===== */
+.nav-btn {
+  -fx-background-color: transparent;
+  -fx-text-fill: #4b5563;
+  -fx-font-size: 14px;
+  -fx-padding: 12px 16px;
+  -fx-background-radius: 8px;
+  -fx-cursor: hand;
+  -fx-font-weight: normal;
+}
+
+.nav-btn:hover {
+  -fx-background-color: #fff7ed;
+  -fx-text-fill: #f97316;
+}
+
+.nav-btn-active {
+  -fx-background-color: linear-gradient(to right, #fff7ed, #fef3c7);
+  -fx-text-fill: #f97316;
+  -fx-font-weight: bold;
+}
+
+.logout-btn:hover {
+  -fx-background-color: #fef2f2;
+  -fx-text-fill: #ef4444;
+}
+
+/* ===== USER AVATAR ===== */
+.avatar {
+  -fx-min-width: 40px;
+  -fx-min-height: 40px;
+}
+
+.avatar-circle {
+  -fx-fill: linear-gradient(to bottom right, #f97316, #d97706);
+}
+
+.avatar-text {
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-font-size: 16px;
+}
+
+.user-name {
+  -fx-font-weight: bold;
+  -fx-text-fill: #111827;
+  -fx-font-size: 14px;
+}
+
+.user-role {
+  -fx-text-fill: #9ca3af;
+  -fx-font-size: 12px;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  -fx-background-color: linear-gradient(to bottom right, #fff7ed, #fffbeb);
+}
+
+.content-header {
+  -fx-padding: 0 0 8px 0;
+}
+
+.datetime-label {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 14px;
+  -fx-padding: 8px 16px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 20px;
+  -fx-border-color: #e5e7eb;
+  -fx-border-radius: 20px;
+}
+
+/* ===== STAT CARDS ===== */
+.stat-card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 16px;
+  -fx-padding: 20px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 12, 0, 0, 4);
+  -fx-min-width: 200px;
+}
+
+.stat-card:hover {
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 16, 0, 0, 6);
+}
+
+.stat-card-primary {
+  -fx-border-color: #fdba74;
+  -fx-border-width: 0 0 0 4px;
+  -fx-border-radius: 16px;
+}
+
+.stat-card-success {
+  -fx-border-color: #86efac;
+  -fx-border-width: 0 0 0 4px;
+  -fx-border-radius: 16px;
+}
+
+.stat-card-warning {
+  -fx-border-color: #fde047;
+  -fx-border-width: 0 0 0 4px;
+  -fx-border-radius: 16px;
+}
+
+.stat-card-danger {
+  -fx-border-color: #fca5a5;
+  -fx-border-width: 0 0 0 4px;
+  -fx-border-radius: 16px;
+}
+
+.stat-icon {
+  -fx-font-size: 28px;
+}
+
+.stat-label {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 13px;
+  -fx-padding: 4px 0 0 0;
+}
+
+.stat-value {
+  -fx-text-fill: #111827;
+  -fx-font-size: 28px;
+  -fx-font-weight: bold;
+}
+
+.stat-change {
+  -fx-text-fill: #22c55e;
+  -fx-font-size: 12px;
+}
+
+/* ===== TABLES ===== */
+.orders-table {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
+.orders-table .column-header-background {
+  -fx-background-color: #f9fafb;
+}
+
+.orders-table .column-header .label {
+  -fx-font-weight: bold;
+  -fx-text-fill: #374151;
+  -fx-font-size: 13px;
+}
+
+.orders-table .table-row-cell {
+  -fx-background-color: transparent;
+  -fx-border-color: #f3f4f6;
+  -fx-border-width: 0 0 1px 0;
+}
+
+.orders-table .table-row-cell:hover {
+  -fx-background-color: #fff7ed;
+}
+
+.orders-table .table-row-cell:selected {
+  -fx-background-color: #fed7aa;
+}
+
+/* ===== STATUS BADGES ===== */
+.status-pending {
+  -fx-background-color: #fef3c7;
+  -fx-text-fill: #d97706;
+  -fx-padding: 4px 8px;
+  -fx-background-radius: 12px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.status-processing {
+  -fx-background-color: #dbeafe;
+  -fx-text-fill: #2563eb;
+  -fx-padding: 4px 8px;
+  -fx-background-radius: 12px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.status-delivered {
+  -fx-background-color: #dcfce7;
+  -fx-text-fill: #16a34a;
+  -fx-padding: 4px 8px;
+  -fx-background-radius: 12px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.status-completed {
+  -fx-background-color: #d1fae5;
+  -fx-text-fill: #059669;
+  -fx-padding: 4px 8px;
+  -fx-background-radius: 12px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.status-cancelled {
+  -fx-background-color: #fee2e2;
+  -fx-text-fill: #dc2626;
+  -fx-padding: 4px 8px;
+  -fx-background-radius: 12px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+/* ===== POPULAR MENU ITEM ===== */
+.popular-item {
+  -fx-background-color: #f9fafb;
+  -fx-background-radius: 8px;
+  -fx-padding: 12px;
+}
+
+.popular-item:hover {
+  -fx-background-color: #fff7ed;
+}
+
+.popular-rank {
+  -fx-background-color: #f97316;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-font-size: 12px;
+  -fx-padding: 4px 8px;
+  -fx-background-radius: 4px;
+  -fx-min-width: 24px;
+  -fx-alignment: center;
+}
+
+.popular-name {
+  -fx-font-weight: bold;
+  -fx-text-fill: #111827;
+  -fx-font-size: 14px;
+}
+
+.popular-sold {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 12px;
+}
+
+/* ===== MANAGEMENT PAGES ===== */
+.management-header {
+  -fx-padding: 0 0 16px 0;
+}
+
+.search-field {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1px;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-padding: 10px 16px;
+  -fx-pref-width: 300px;
+}
+
+.search-field:focused {
+  -fx-border-color: #f97316;
+}
+
+/* ===== DIALOG / MODAL ===== */
+.dialog-pane {
+  -fx-background-color: #ffffff;
+  -fx-padding: 20px;
+}
+
+.dialog-pane .header-panel {
+  -fx-background-color: #fff7ed;
+  -fx-padding: 20px;
+}
+
+.dialog-pane .content {
+  -fx-padding: 20px;
+}
+
+/* ===== FORM STYLES ===== */
+.form-label {
+  -fx-font-weight: bold;
+  -fx-text-fill: #374151;
+  -fx-font-size: 13px;
+}
+
+.form-field {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1px;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-padding: 10px 14px;
+  -fx-font-size: 14px;
+}
+
+.form-field:focused {
+  -fx-border-color: #f97316;
+  -fx-border-width: 2px;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  -fx-alignment: center;
+  -fx-padding: 40px;
+}
+
+.empty-state-icon {
+  -fx-font-size: 48px;
+}
+
+.empty-state-text {
+  -fx-text-fill: #9ca3af;
+  -fx-font-size: 16px;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.restos.controller.MenuManagementController"
+    spacing="20"
+    stylesheets="@../../css/main.css, @../../css/dashboard.css">
+
+    <!-- Header with Search and Add Button -->
+    <HBox alignment="CENTER_LEFT" spacing="16" styleClass="management-header">
+        <TextField fx:id="searchField"
+            promptText="🔍 Cari menu..."
+            styleClass="search-field"
+            onKeyReleased="#handleSearch" />
+
+        <ComboBox fx:id="categoryFilter"
+            promptText="Semua Kategori"
+            prefWidth="180"
+            onAction="#handleCategoryFilter" />
+
+        <Region HBox.hgrow="ALWAYS" />
+
+        <Button text="➕ Tambah Menu"
+            styleClass="btn, btn-primary"
+            onAction="#handleAddMenu" />
+    </HBox>
+
+    <!-- Menu Table -->
+    <TableView fx:id="menuTable" VBox.vgrow="ALWAYS" styleClass="card">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
+            <TableColumn fx:id="nameColumn" text="Nama Menu" prefWidth="200" />
+            <TableColumn fx:id="categoryColumn" text="Kategori" prefWidth="120" />
+            <TableColumn fx:id="priceColumn" text="Harga" prefWidth="120" />
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+            <TableColumn fx:id="actionColumn" text="Aksi" prefWidth="150" />
+        </columns>
+        <placeholder>
+            <VBox alignment="CENTER" spacing="12">
+                <Label text="🍔" style="-fx-font-size: 48px;" />
+                <Label text="Belum ada menu" styleClass="text-secondary" />
+                <Button text="Tambah Menu Pertama" styleClass="btn, btn-primary, btn-sm"
+                    onAction="#handleAddMenu" />
+            </VBox>
+        </placeholder>
+    </TableView>
+
+    <!-- Footer Stats -->
+    <HBox alignment="CENTER_LEFT" spacing="24">
+        <Label fx:id="totalMenuLabel" text="Total: 0 menu" styleClass="text-secondary" />
+        <Label fx:id="activeMenuLabel" text="Aktif: 0" styleClass="text-secondary" />
+        <Label fx:id="inactiveMenuLabel" text="Nonaktif: 0" styleClass="text-secondary" />
+    </HBox>
+
+</VBox>
