@@ -331,10 +331,11 @@ restos-desktop/
 
 ### Phase 3: Admin Module (Week 3-4)
 
-- [ ] Admin dashboard UI
-- [ ] Menu management (CRUD)
-- [ ] Table management (CRUD)
-- [ ] User management (CRUD)
+- [x] Admin dashboard UI
+- [x] Menu management (CRUD)
+- [x] Table management (CRUD)
+- [x] User management (CRUD)
+- [x] Inventory management (CRUD)
 - [ ] Charts integration
 
 ### Phase 4: Waiter Module (Week 4-5)

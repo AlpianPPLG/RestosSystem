@@ -75,6 +75,15 @@ public interface InventoryDAO {
     boolean updateRemainingStock(int menuId, int remainingStock);
 
     /**
+     * Update stock by inventory ID
+     * 
+     * @param id    Inventory ID
+     * @param stock New remaining stock value
+     * @return true if successful
+     */
+    boolean updateStock(int id, int stock);
+
+    /**
      * Decrease stock by quantity
      * 
      * @param menuId   Menu ID

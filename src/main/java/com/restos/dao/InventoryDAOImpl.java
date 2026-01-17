@@ -202,6 +202,24 @@ public class InventoryDAOImpl implements InventoryDAO {
     }
 
     @Override
+    public boolean updateStock(int id, int stock) {
+        String sql = "UPDATE inventories SET remaining_stock = ? WHERE id = ?";
+
+        try (Connection conn = dbConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, stock);
+            stmt.setInt(2, id);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating stock by ID: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean decreaseStock(int menuId, int quantity) {
         String sql = "UPDATE inventories SET remaining_stock = remaining_stock - ? WHERE menu_id = ? AND remaining_stock >= ?";
 
