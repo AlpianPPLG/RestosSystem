@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
@@ -131,7 +132,23 @@
                         </VBox>
                     </HBox>
 
-                    <!-- Charts and Recent Orders Row -->
+                    <!-- Charts Row -->
+                    <HBox spacing="20">
+                        <!-- Weekly Sales Chart -->
+                        <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="16">
+                            <Label text="📊 Penjualan 7 Hari Terakhir" styleClass="heading-3" />
+                            <BarChart fx:id="weeklyChart" prefHeight="250" animated="false">
+                                <xAxis>
+                                    <CategoryAxis fx:id="chartXAxis" label="Hari" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis fx:id="chartYAxis" label="Pendapatan (Rp)" />
+                                </yAxis>
+                            </BarChart>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Recent Orders and Quick Actions Row -->
                     <HBox spacing="20" VBox.vgrow="ALWAYS">
                         <!-- Recent Orders -->
                         <VBox styleClass="card" HBox.hgrow="ALWAYS" spacing="16">

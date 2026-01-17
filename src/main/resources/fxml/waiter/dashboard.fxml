@@ -1,17 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml/1"
-    alignment="CENTER"
-    spacing="20"
-    style="-fx-background-color: linear-gradient(to bottom right, #FFF7ED, #FFFBEB);">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.restos.controller.WaiterDashboardController"
+    stylesheets="@../../css/main.css,@../../css/dashboard.css,@../../css/waiter.css">
 
-    <Label text="🍽️" style="-fx-font-size: 64px;" />
-    <Label text="Waiter Dashboard"
-        style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #F97316;" />
-    <Label text="Coming Soon..." style="-fx-font-size: 18px; -fx-text-fill: #6B7280;" />
+    <!-- Left Sidebar -->
+    <left>
+        <VBox prefWidth="240" styleClass="sidebar" spacing="0">
+            <padding>
+                <Insets bottom="20" left="0" right="0" top="20" />
+            </padding>
 
-</VBox>
+            <!-- Logo Section -->
+            <VBox alignment="CENTER" spacing="4" styleClass="sidebar-header">
+                <padding>
+                    <Insets bottom="0" left="16" right="16" top="0" />
+                </padding>
+                <Label text="🍽️" style="-fx-font-size: 32px;" />
+                <Label text="RESTOS" styleClass="sidebar-logo" />
+                <Label text="Waiter Panel" styleClass="sidebar-subtitle" />
+            </VBox>
+
+            <VBox prefHeight="24" />
+
+            <!-- Navigation -->
+            <VBox spacing="4" VBox.vgrow="ALWAYS" styleClass="nav-menu">
+                <padding>
+                    <Insets bottom="0" left="12" right="12" top="0" />
+                </padding>
+
+                <Button fx:id="navTables" text="🪑  Meja" styleClass="nav-btn,nav-btn-active"
+                    onAction="#showTables" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navOrders" text="📋  Pesanan Saya" styleClass="nav-btn"
+                    onAction="#showMyOrders" maxWidth="Infinity" alignment="CENTER_LEFT" />
+                <Button fx:id="navHistory" text="📜  Riwayat" styleClass="nav-btn"
+                    onAction="#showHistory" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            </VBox>
+
+            <!-- User Info -->
+            <VBox styleClass="sidebar-footer" spacing="12">
+                <padding>
+                    <Insets bottom="12" left="16" right="16" top="12" />
+                </padding>
+                <Separator />
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label fx:id="avatarLabel" text="W" styleClass="avatar-text"
+                        style="-fx-background-color: #F97316; -fx-background-radius: 20; -fx-min-width: 40; -fx-min-height: 40; -fx-alignment: center; -fx-text-fill: white; -fx-font-weight: bold;" />
+                    <VBox spacing="2">
+                        <Label fx:id="userNameLabel" text="Waiter" styleClass="user-name" />
+                        <Label fx:id="userRoleLabel" text="Pelayan" styleClass="user-role" />
+                    </VBox>
+                </HBox>
+                <Button text="🚪  Keluar" styleClass="nav-btn,logout-btn" onAction="#handleLogout"
+                    maxWidth="Infinity" alignment="CENTER_LEFT" />
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="0" styleClass="main-content">
+            <padding>
+                <Insets top="24" right="32" bottom="24" left="32" />
+            </padding>
+
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="content-header">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label fx:id="pageTitle" text="Pilih Meja" styleClass="heading-1" />
+                    <Label fx:id="pageSubtitle" text="Klik meja untuk membuat pesanan baru"
+                        styleClass="subtitle" />
+                </VBox>
+                <Label fx:id="dateTimeLabel" text="Senin, 17 Jan 2026 - 10:00"
+                    styleClass="datetime-label" />
+            </HBox>
+
+            <VBox prefHeight="24" />
+
+            <!-- Content Area -->
+            <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS">
+                <!-- Default: Table Grid Content -->
+                <VBox fx:id="tableGridContent" spacing="24">
+
+                    <!-- Stats Cards -->
+                    <HBox spacing="20">
+                        <VBox styleClass="stat-card,stat-card-primary" HBox.hgrow="ALWAYS">
+                            <Label text="🪑" styleClass="stat-icon" />
+                            <Label text="Total Meja" styleClass="stat-label" />
+                            <Label fx:id="totalTablesLabel" text="0" styleClass="stat-value" />
+                        </VBox>
+                        <VBox styleClass="stat-card,stat-card-success" HBox.hgrow="ALWAYS">
+                            <Label text="✅" styleClass="stat-icon" />
+                            <Label text="Tersedia" styleClass="stat-label" />
+                            <Label fx:id="availableTablesLabel" text="0" styleClass="stat-value" />
+                        </VBox>
+                        <VBox styleClass="stat-card,stat-card-danger" HBox.hgrow="ALWAYS">
+                            <Label text="🍽️" styleClass="stat-icon" />
+                            <Label text="Terisi" styleClass="stat-label" />
+                            <Label fx:id="occupiedTablesLabel" text="0" styleClass="stat-value" />
+                        </VBox>
+                        <VBox styleClass="stat-card,stat-card-warning" HBox.hgrow="ALWAYS">
+                            <Label text="📅" styleClass="stat-icon" />
+                            <Label text="Dipesan" styleClass="stat-label" />
+                            <Label fx:id="reservedTablesLabel" text="0" styleClass="stat-value" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- Table Grid -->
+                    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="16">
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🪑 Daftar Meja" styleClass="heading-3" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Button text="🔄 Refresh" styleClass="btn,btn-secondary,btn-sm"
+                                onAction="#handleRefresh" />
+                        </HBox>
+
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                            style="-fx-background-color: transparent;">
+                            <FlowPane fx:id="tableGrid" hgap="16" vgap="16" alignment="TOP_LEFT">
+                                <padding>
+                                    <Insets bottom="16" left="0" right="0" top="8" />
+                                </padding>
+                            </FlowPane>
+                        </ScrollPane>
+                    </VBox>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>

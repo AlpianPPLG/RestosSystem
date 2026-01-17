@@ -525,6 +525,58 @@ public class OrderDAOImpl implements OrderDAO {
         return 0.0;
     }
 
+    @Override
+    public java.util.Map<LocalDate, Double> getWeeklyRevenue() {
+        java.util.Map<LocalDate, Double> weeklyData = new java.util.LinkedHashMap<>();
+        LocalDate today = LocalDate.now();
+
+        // Initialize all 7 days with 0
+        for (int i = 6; i >= 0; i--) {
+            weeklyData.put(today.minusDays(i), 0.0);
+        }
+
+        String sql = "SELECT DATE(created_at) as order_date, COALESCE(SUM(total_amount), 0) as daily_revenue " +
+                "FROM orders WHERE DATE(created_at) >= ? AND status = 'completed' " +
+                "GROUP BY DATE(created_at) ORDER BY order_date";
+
+        try (Connection conn = dbConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, Date.valueOf(today.minusDays(6)));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    LocalDate date = rs.getDate("order_date").toLocalDate();
+                    double revenue = rs.getDouble("daily_revenue");
+                    weeklyData.put(date, revenue);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting weekly revenue: " + e.getMessage());
+        }
+
+        return weeklyData;
+    }
+
+    @Override
+    public int countByDate(LocalDate date) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE DATE(created_at) = ?";
+
+        try (Connection conn = dbConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, Date.valueOf(date));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error counting orders by date: " + e.getMessage());
+        }
+
+        return 0;
+    }
+
     /**
      * Map ResultSet row to Order object
      */

@@ -20,7 +20,8 @@ public class AlertUtil {
 
     /**
      * Show information alert
-     * @param title Alert title
+     * 
+     * @param title   Alert title
      * @param message Alert message
      */
     public static void showInfo(String title, String message) {
@@ -29,7 +30,8 @@ public class AlertUtil {
 
     /**
      * Show success alert
-     * @param title Alert title
+     * 
+     * @param title   Alert title
      * @param message Alert message
      */
     public static void showSuccess(String title, String message) {
@@ -38,7 +40,8 @@ public class AlertUtil {
 
     /**
      * Show warning alert
-     * @param title Alert title
+     * 
+     * @param title   Alert title
      * @param message Alert message
      */
     public static void showWarning(String title, String message) {
@@ -47,7 +50,8 @@ public class AlertUtil {
 
     /**
      * Show error alert
-     * @param title Alert title
+     * 
+     * @param title   Alert title
      * @param message Alert message
      */
     public static void showError(String title, String message) {
@@ -56,8 +60,9 @@ public class AlertUtil {
 
     /**
      * Show generic alert
-     * @param type Alert type
-     * @param title Alert title
+     * 
+     * @param type    Alert type
+     * @param title   Alert title
      * @param message Alert message
      */
     public static void showAlert(AlertType type, String title, String message) {
@@ -71,7 +76,8 @@ public class AlertUtil {
 
     /**
      * Show confirmation dialog
-     * @param title Dialog title
+     * 
+     * @param title   Dialog title
      * @param message Confirmation message
      * @return true if user clicks OK/Yes, false otherwise
      */
@@ -87,11 +93,23 @@ public class AlertUtil {
     }
 
     /**
+     * Show confirmation dialog (alias for showConfirmation)
+     * 
+     * @param title   Dialog title
+     * @param message Confirmation message
+     * @return true if user clicks OK/Yes, false otherwise
+     */
+    public static boolean showConfirm(String title, String message) {
+        return showConfirmation(title, message);
+    }
+
+    /**
      * Show confirmation dialog with custom buttons
-     * @param title Dialog title
+     * 
+     * @param title   Dialog title
      * @param message Confirmation message
      * @param yesText Text for Yes/OK button
-     * @param noText Text for No/Cancel button
+     * @param noText  Text for No/Cancel button
      * @return true if user clicks Yes, false otherwise
      */
     public static boolean showConfirmation(String title, String message, String yesText, String noText) {
@@ -112,22 +130,23 @@ public class AlertUtil {
 
     /**
      * Show delete confirmation dialog
+     * 
      * @param itemName Name of the item to delete
      * @return true if user confirms deletion, false otherwise
      */
     public static boolean showDeleteConfirmation(String itemName) {
         return showConfirmation(
-            "Konfirmasi Hapus",
-            "Apakah Anda yakin ingin menghapus " + itemName + "?\n\nTindakan ini tidak dapat dibatalkan.",
-            "Hapus",
-            "Batal"
-        );
+                "Konfirmasi Hapus",
+                "Apakah Anda yakin ingin menghapus " + itemName + "?\n\nTindakan ini tidak dapat dibatalkan.",
+                "Hapus",
+                "Batal");
     }
 
     /**
      * Show text input dialog
-     * @param title Dialog title
-     * @param message Input prompt message
+     * 
+     * @param title        Dialog title
+     * @param message      Input prompt message
      * @param defaultValue Default value for input
      * @return User input or null if cancelled
      */
@@ -143,7 +162,8 @@ public class AlertUtil {
 
     /**
      * Show text input dialog without default value
-     * @param title Dialog title
+     * 
+     * @param title   Dialog title
      * @param message Input prompt message
      * @return User input or null if cancelled
      */
@@ -153,15 +173,16 @@ public class AlertUtil {
 
     /**
      * Apply custom styling to alert dialog
+     * 
      * @param alert Alert to style
      */
     private static void styleAlert(Alert alert) {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.setAlwaysOnTop(true);
-        
+
         // Add custom CSS if needed
         // alert.getDialogPane().getStylesheets().add(
-        //     AlertUtil.class.getResource("/css/dialogs.css").toExternalForm()
+        // AlertUtil.class.getResource("/css/dialogs.css").toExternalForm()
         // );
     }
 }

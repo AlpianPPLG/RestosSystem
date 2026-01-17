@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.restos.controller.NewOrderController"
+    stylesheets="@../../css/main.css,@../../css/dashboard.css,@../../css/waiter.css">
+
+    <!-- Left: Menu Catalog -->
+    <center>
+        <VBox spacing="0" style="-fx-background-color: #f3f4f6;">
+            <!-- Category Tabs -->
+            <HBox fx:id="categoryTabs" spacing="8" alignment="CENTER_LEFT"
+                styleClass="menu-category-tabs">
+                <padding>
+                    <Insets top="12" right="16" bottom="12" left="16" />
+                </padding>
+                <Button text="🍽️ Semua" styleClass="category-tab,category-tab-active"
+                    onAction="#filterAll" />
+                <!-- Categories will be added dynamically -->
+            </HBox>
+
+            <!-- Search Bar -->
+            <HBox spacing="12" alignment="CENTER_LEFT"
+                style="-fx-background-color: white; -fx-padding: 12 16;">
+                <TextField fx:id="searchField" promptText="🔍 Cari menu..."
+                    styleClass="search-input" HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="sortCombo" promptText="Urutkan" styleClass="filter-combo"
+                    prefWidth="150" />
+            </HBox>
+
+            <!-- Menu Grid -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                style="-fx-background-color: transparent;">
+                <FlowPane fx:id="menuGrid" hgap="16" vgap="16" alignment="TOP_LEFT">
+                    <padding>
+                        <Insets top="16" right="16" bottom="16" left="16" />
+                    </padding>
+                </FlowPane>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+    <!-- Right: Cart Sidebar -->
+    <right>
+        <VBox prefWidth="350" styleClass="cart-sidebar">
+            <!-- Cart Header -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="cart-header">
+                <Label text="🛒" style="-fx-font-size: 20px;" />
+                <VBox>
+                    <Label fx:id="cartTableLabel" text="Meja -"
+                        style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    <Label fx:id="cartCustomerLabel" text="Customer"
+                        style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.8);" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="✏️" styleClass="btn,btn-sm"
+                    style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white;"
+                    onAction="#editCustomerName" />
+            </HBox>
+
+            <!-- Cart Items -->
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="cart-items">
+                <VBox fx:id="cartItemsContainer" spacing="8">
+                    <padding>
+                        <Insets top="12" right="12" bottom="12" left="12" />
+                    </padding>
+                    <!-- Cart items will be added dynamically -->
+                    <VBox fx:id="emptyCartState" alignment="CENTER" spacing="8">
+                        <padding>
+                            <Insets top="48" bottom="48" />
+                        </padding>
+                        <Label text="🛒" style="-fx-font-size: 48px; -fx-opacity: 0.3;" />
+                        <Label text="Keranjang kosong"
+                            style="-fx-text-fill: #9ca3af; -fx-font-size: 14px;" />
+                        <Label text="Pilih menu untuk memulai"
+                            style="-fx-text-fill: #d1d5db; -fx-font-size: 12px;" />
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+            <!-- Cart Footer -->
+            <VBox spacing="12" styleClass="cart-footer">
+                <!-- Order Notes -->
+                <VBox spacing="4">
+                    <Label text="Catatan Pesanan:"
+                        style="-fx-font-size: 12px; -fx-text-fill: #6b7280;" />
+                    <TextArea fx:id="orderNotesArea" promptText="Tambahkan catatan khusus..."
+                        prefRowCount="2" styleClass="text-area" />
+                </VBox>
+
+                <Separator />
+
+                <!-- Order Type -->
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Tipe:" style="-fx-text-fill: #6b7280;" />
+                    <ToggleButton fx:id="dineInToggle" text="Dine In"
+                        styleClass="btn,btn-sm,btn-secondary" />
+                    <ToggleButton fx:id="takeAwayToggle" text="Take Away"
+                        styleClass="btn,btn-sm,btn-secondary" />
+                </HBox>
+
+                <Separator />
+
+                <!-- Totals -->
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Subtotal" styleClass="cart-total-label" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="subtotalLabel" text="Rp 0" style="-fx-text-fill: #374151;" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Pajak (10%)" styleClass="cart-total-label" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="taxLabel" text="Rp 0" style="-fx-text-fill: #374151;" />
+                </HBox>
+                <Separator />
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Total" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="totalLabel" text="Rp 0" styleClass="cart-total-value" />
+                </HBox>
+
+                <!-- Action Buttons -->
+                <HBox spacing="8">
+                    <Button text="❌ Batal" styleClass="btn,btn-danger" onAction="#handleCancel"
+                        HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                    <Button fx:id="submitButton" text="✅ Kirim Pesanan" styleClass="btn,btn-primary"
+                        onAction="#handleSubmitOrder" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </right>
+</BorderPane>

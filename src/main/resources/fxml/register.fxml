@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.restos.controller.RegisterController"
+    styleClass="login-container"
+    stylesheets="@../css/main.css, @../css/login.css">
+
+    <!-- Registration Card -->
+    <ScrollPane fitToWidth="true" fitToHeight="true"
+        style="-fx-background-color: transparent; -fx-background: transparent;">
+        <VBox alignment="CENTER" style="-fx-padding: 40 0;">
+            <VBox styleClass="login-card" alignment="CENTER" spacing="20" maxWidth="480">
+
+                <!-- Logo Section -->
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="🍽️" style="-fx-font-size: 48px;" />
+                    <Label text="RESTOS" styleClass="login-logo" style="-fx-font-size: 36px;" />
+                    <Label text="Daftar Akun Baru" styleClass="login-subtitle"
+                        style="-fx-font-size: 16px;" />
+                </VBox>
+
+                <!-- Spacer -->
+                <VBox prefHeight="8" />
+
+                <!-- Form Section -->
+                <VBox spacing="14" alignment="CENTER">
+
+                    <!-- Full Name Field -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="Nama Lengkap *" styleClass="form-label" />
+                        <TextField fx:id="fullNameField"
+                            promptText="Masukkan nama lengkap"
+                            styleClass="login-field"
+                            prefWidth="360" />
+                    </VBox>
+
+                    <!-- Username Field -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="Username *" styleClass="form-label" />
+                        <TextField fx:id="usernameField"
+                            promptText="Masukkan username (min 4 karakter)"
+                            styleClass="login-field"
+                            prefWidth="360" />
+                    </VBox>
+
+                    <!-- Email Field -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="Email" styleClass="form-label" />
+                        <TextField fx:id="emailField"
+                            promptText="Masukkan email (opsional)"
+                            styleClass="login-field"
+                            prefWidth="360" />
+                    </VBox>
+
+                    <!-- Phone Field -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="No. Telepon" styleClass="form-label" />
+                        <TextField fx:id="phoneField"
+                            promptText="Masukkan nomor telepon (opsional)"
+                            styleClass="login-field"
+                            prefWidth="360" />
+                    </VBox>
+
+                    <!-- Role Selection -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="Role / Posisi *" styleClass="form-label" />
+                        <ComboBox fx:id="roleComboBox"
+                            promptText="Pilih posisi"
+                            styleClass="login-field"
+                            prefWidth="360" />
+                    </VBox>
+
+                    <!-- Password Field -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="Password *" styleClass="form-label" />
+                        <PasswordField fx:id="passwordField"
+                            promptText="Masukkan password (min 6 karakter)"
+                            styleClass="login-field"
+                            prefWidth="360" />
+                    </VBox>
+
+                    <!-- Confirm Password Field -->
+                    <VBox spacing="4" alignment="CENTER_LEFT">
+                        <Label text="Konfirmasi Password *" styleClass="form-label" />
+                        <PasswordField fx:id="confirmPasswordField"
+                            promptText="Masukkan ulang password"
+                            styleClass="login-field"
+                            prefWidth="360"
+                            onAction="#handleRegister" />
+                    </VBox>
+
+                    <!-- Error/Success Message -->
+                    <Label fx:id="messageLabel"
+                        styleClass="login-error"
+                        visible="false"
+                        managed="false"
+                        wrapText="true"
+                        maxWidth="360" />
+
+                </VBox>
+
+                <!-- Spacer -->
+                <VBox prefHeight="8" />
+
+                <!-- Register Button -->
+                <StackPane>
+                    <Button fx:id="registerButton"
+                        text="Daftar"
+                        styleClass="login-btn"
+                        onAction="#handleRegister"
+                        prefWidth="360" />
+                    <ProgressIndicator fx:id="loadingIndicator"
+                        prefWidth="24"
+                        prefHeight="24"
+                        visible="false"
+                        managed="false" />
+                </StackPane>
+
+                <!-- Back to Login Link -->
+                <HBox alignment="CENTER" spacing="4">
+                    <Label text="Sudah punya akun?" style="-fx-text-fill: #6b7280;" />
+                    <Hyperlink fx:id="loginLink"
+                        text="Masuk di sini"
+                        onAction="#goToLogin"
+                        style="-fx-text-fill: #f97316; -fx-font-weight: bold;" />
+                </HBox>
+
+                <!-- Footer -->
+                <VBox alignment="CENTER" spacing="4">
+                    <VBox prefHeight="8" />
+                    <Label text="© 2026 Restos - Restaurant POS System" styleClass="login-footer" />
+                </VBox>
+
+            </VBox>
+        </VBox>
+    </ScrollPane>
+
+</StackPane>

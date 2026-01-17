@@ -143,4 +143,28 @@ public class CurrencyFormatter {
         String formatted = formatWithPrefix(amount);
         return String.format("%" + width + "s", formatted);
     }
+
+    /**
+     * Format amount in short format with Rp prefix
+     * Example: 50000 -> Rp 50.000
+     * 
+     * @param amount Amount to format
+     * @return Formatted currency string
+     */
+    public static String formatShort(java.math.BigDecimal amount) {
+        if (amount == null)
+            return "Rp 0";
+        return "Rp " + DECIMAL_FORMAT.format(amount.doubleValue());
+    }
+
+    /**
+     * Format amount in short format with Rp prefix
+     * Example: 50000 -> Rp 50.000
+     * 
+     * @param amount Amount to format
+     * @return Formatted currency string
+     */
+    public static String formatShort(double amount) {
+        return "Rp " + DECIMAL_FORMAT.format(amount);
+    }
 }

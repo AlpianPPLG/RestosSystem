@@ -4,6 +4,8 @@ import com.restos.App;
 import com.restos.model.User;
 import com.restos.service.AuthService;
 import com.restos.util.SessionManager;
+import com.restos.util.UIFeedback;
+import com.restos.util.ValidationUtil;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -14,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,6 +46,9 @@ public class LoginController implements Initializable {
     @FXML
     private ProgressIndicator loadingIndicator;
 
+    @FXML
+    private VBox loginContainer;
+
     private AuthService authService;
 
     @Override
@@ -53,6 +60,28 @@ public class LoginController implements Initializable {
 
         // Focus on username field
         Platform.runLater(() -> usernameField.requestFocus());
+
+        // Setup keyboard shortcuts
+        setupKeyboardShortcuts();
+    }
+
+    /**
+     * Setup keyboard shortcuts for login form
+     */
+    private void setupKeyboardShortcuts() {
+        // Enter on username field moves to password
+        usernameField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                passwordField.requestFocus();
+            }
+        });
+
+        // Enter on password field triggers login
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handleLogin();
+            }
+        });
     }
 
     /**
@@ -64,8 +93,17 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
 
         // Validate input
-        if (username.isEmpty() || password.isEmpty()) {
-            showError("Username dan password harus diisi!");
+        if (ValidationUtil.isEmpty(username)) {
+            showError("Username harus diisi!");
+            UIFeedback.shake(usernameField);
+            usernameField.requestFocus();
+            return;
+        }
+
+        if (ValidationUtil.isEmpty(password)) {
+            showError("Password harus diisi!");
+            UIFeedback.shake(passwordField);
+            passwordField.requestFocus();
             return;
         }
 
@@ -92,6 +130,9 @@ public class LoginController implements Initializable {
             } else {
                 setLoading(false);
                 showError("Username atau password salah!");
+                UIFeedback.shake(loginButton);
+                passwordField.clear();
+                passwordField.requestFocus();
             }
         });
 
@@ -99,6 +140,7 @@ public class LoginController implements Initializable {
             setLoading(false);
             Throwable exception = loginTask.getException();
             showError("Gagal login: " + exception.getMessage());
+            UIFeedback.shake(loginButton);
             exception.printStackTrace();
         });
 
@@ -108,6 +150,7 @@ public class LoginController implements Initializable {
 
     /**
      * Route user to appropriate dashboard based on their role
+     * 
      * @param role User role
      */
     private void routeToDashboard(String role) {
@@ -144,6 +187,7 @@ public class LoginController implements Initializable {
 
     /**
      * Show error message
+     * 
      * @param message Error message to display
      */
     private void showError(String message) {
@@ -166,6 +210,7 @@ public class LoginController implements Initializable {
 
     /**
      * Set loading state
+     * 
      * @param loading Whether to show loading state
      */
     private void setLoading(boolean loading) {
@@ -176,5 +221,13 @@ public class LoginController implements Initializable {
             usernameField.setDisable(loading);
             passwordField.setDisable(loading);
         });
+    }
+
+    /**
+     * Navigate to registration page
+     */
+    @FXML
+    private void goToRegister() {
+        App.switchScene("/fxml/register.fxml", "Registrasi");
     }
 }

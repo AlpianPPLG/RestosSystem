@@ -176,4 +176,19 @@ public interface OrderDAO {
      * @return Total revenue in date range
      */
     double getRevenueByDateRange(LocalDate startDate, LocalDate endDate);
+
+    /**
+     * Get daily revenue for the last 7 days
+     * 
+     * @return Map of date to revenue amount
+     */
+    java.util.Map<LocalDate, Double> getWeeklyRevenue();
+
+    /**
+     * Count orders by date
+     * 
+     * @param date The date to count orders for
+     * @return Number of orders on that date
+     */
+    int countByDate(LocalDate date);
 }

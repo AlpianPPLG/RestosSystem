@@ -9,6 +9,7 @@ import com.restos.util.AlertUtil;
 import com.restos.util.CurrencyFormatter;
 import com.restos.util.DateTimeUtil;
 import com.restos.util.SessionManager;
+import com.restos.util.UIFeedback;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +21,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,9 +34,11 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -116,6 +124,14 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private VBox popularMenusContainer;
 
+    // Weekly Sales Chart
+    @FXML
+    private BarChart<String, Number> weeklyChart;
+    @FXML
+    private CategoryAxis chartXAxis;
+    @FXML
+    private NumberAxis chartYAxis;
+
     // DAOs
     private OrderDAO orderDAO;
     private TableDAO tableDAO;
@@ -153,6 +169,26 @@ public class AdminDashboardController implements Initializable {
 
         // Update date/time
         updateDateTime();
+
+        // Setup keyboard shortcuts
+        setupKeyboardShortcuts();
+    }
+
+    /**
+     * Setup keyboard shortcuts
+     */
+    private void setupKeyboardShortcuts() {
+        // F5 to refresh
+        contentArea.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.setOnKeyPressed(event -> {
+                    if (event.getCode() == KeyCode.F5) {
+                        handleRefresh();
+                        UIFeedback.showInfo(contentArea, "Data diperbarui");
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -245,6 +281,9 @@ public class AdminDashboardController implements Initializable {
         // Load stats
         loadStats();
 
+        // Load weekly chart
+        loadWeeklyChart();
+
         // Load recent orders
         loadRecentOrders();
 
@@ -259,7 +298,17 @@ public class AdminDashboardController implements Initializable {
         // Revenue
         double todayRevenue = paymentDAO.getTodayRevenue();
         revenueLabel.setText(CurrencyFormatter.format(todayRevenue));
-        revenueChangeLabel.setText("Hari ini");
+
+        // Calculate yesterday's revenue for comparison
+        double yesterdayRevenue = orderDAO.getRevenueByDateRange(
+                LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+        if (yesterdayRevenue > 0) {
+            double changePercent = ((todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100;
+            String sign = changePercent >= 0 ? "+" : "";
+            revenueChangeLabel.setText(String.format("%s%.1f%% dari kemarin", sign, changePercent));
+        } else {
+            revenueChangeLabel.setText("Hari ini");
+        }
 
         // Orders
         int todayOrders = orderDAO.countToday();
@@ -279,6 +328,42 @@ public class AdminDashboardController implements Initializable {
         int processingCount = orderDAO.countByStatus(Order.STATUS_PROCESSING);
         pendingLabel.setText(String.valueOf(pendingCount + processingCount));
         pendingChangeLabel.setText("Menunggu diproses");
+    }
+
+    /**
+     * Load weekly sales chart
+     */
+    private void loadWeeklyChart() {
+        weeklyChart.getData().clear();
+
+        // Get weekly revenue data
+        Map<LocalDate, Double> weeklyData = orderDAO.getWeeklyRevenue();
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Pendapatan");
+
+        DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("EEE", new java.util.Locale("id", "ID"));
+
+        for (Map.Entry<LocalDate, Double> entry : weeklyData.entrySet()) {
+            String dayName = entry.getKey().format(dayFormatter);
+            // Convert to thousands for cleaner display
+            double revenueInK = entry.getValue() / 1000.0;
+            series.getData().add(new XYChart.Data<>(dayName, revenueInK));
+        }
+
+        weeklyChart.getData().add(series);
+
+        // Style the chart
+        weeklyChart.setLegendVisible(false);
+        chartYAxis.setLabel("Pendapatan (Ribu Rp)");
+        chartXAxis.setLabel("");
+
+        // Apply custom color to bars
+        for (XYChart.Data<String, Number> data : series.getData()) {
+            if (data.getNode() != null) {
+                data.getNode().setStyle("-fx-bar-fill: #F97316;");
+            }
+        }
     }
 
     /**
@@ -359,6 +444,15 @@ public class AdminDashboardController implements Initializable {
     private void updateDateTime() {
         String formattedDateTime = DateTimeUtil.formatDateTime(LocalDateTime.now());
         dateTimeLabel.setText(formattedDateTime);
+    }
+
+    /**
+     * Handle refresh action
+     */
+    @FXML
+    private void handleRefresh() {
+        loadDashboardData();
+        updateDateTime();
     }
 
     /**
