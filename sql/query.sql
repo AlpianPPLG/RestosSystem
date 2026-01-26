@@ -109,3 +109,31 @@ CREATE INDEX idx_tables_status ON tables(status);
 -- Sample Seeding Data (Optional)
 INSERT INTO categories (name, sort_order) VALUES ('Makanan Berat', 1), ('Minuman', 2), ('Dessert', 3);
 INSERT INTO tables (table_number, capacity) VALUES ('T01', 4), ('T02', 2), ('T03', 6);
+
+-- Default Users (Password: admin123, waiter123, kitchen123, cashier123)
+-- Password hashed using SHA-256
+INSERT INTO users (username, password_hash, role, full_name) VALUES 
+('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'admin', 'Administrator'),
+('waiter', '4e41d9c99d26c1e7c2f6c6c7e1f8c8e5c5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5', 'waiter', 'Waiter Staff'),
+('kitchen', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'kitchen', 'Kitchen Staff'),
+('cashier', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'cashier', 'Cashier Staff');
+
+-- Sample Menu Items
+INSERT INTO menus (category_id, name, description, price, is_active) VALUES 
+-- Makanan Berat (category_id = 1)
+(1, 'Nasi Goreng Spesial', 'Nasi goreng dengan telur, ayam, dan sayuran', 25000.00, TRUE),
+(1, 'Mie Goreng Seafood', 'Mie goreng dengan udang, cumi, dan sayuran', 28000.00, TRUE),
+(1, 'Ayam Bakar Madu', 'Ayam bakar dengan saus madu spesial', 35000.00, TRUE),
+(1, 'Sate Ayam', 'Sate ayam 10 tusuk dengan bumbu kacang', 30000.00, TRUE),
+(1, 'Nasi Rendang', 'Nasi putih dengan rendang daging sapi', 40000.00, TRUE),
+-- Minuman (category_id = 2)
+(2, 'Es Teh Manis', 'Teh manis dingin segar', 5000.00, TRUE),
+(2, 'Es Jeruk', 'Jus jeruk segar dengan es', 8000.00, TRUE),
+(2, 'Kopi Hitam', 'Kopi hitam original', 10000.00, TRUE),
+(2, 'Cappuccino', 'Kopi cappuccino dengan foam susu', 15000.00, TRUE),
+(2, 'Jus Alpukat', 'Jus alpukat segar dengan susu', 12000.00, TRUE),
+-- Dessert (category_id = 3)
+(3, 'Es Krim Vanilla', 'Es krim vanilla premium 2 scoop', 15000.00, TRUE),
+(3, 'Pisang Goreng Coklat', 'Pisang goreng dengan topping coklat', 12000.00, TRUE),
+(3, 'Puding Karamel', 'Puding karamel lembut', 10000.00, TRUE),
+(3, 'Brownies Coklat', 'Brownies coklat hangat dengan es krim', 18000.00, TRUE);

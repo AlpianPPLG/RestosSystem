@@ -51,15 +51,15 @@ RESTOS adalah aplikasi Point of Sale (POS) untuk restoran yang membantu mengelol
    - **Username** *(wajib, minimal 4 karakter)*
    - **Email** *(opsional)*
    - **No. Telepon** *(opsional)*
-   - **Role/Posisi** *(pilih: Waiter, Kitchen, atau Cashier)*
+   - **Role/Posisi** *(pilih: Admin, Waiter, Kitchen, atau Cashier)*
    - **Password** *(wajib, minimal 6 karakter)*
    - **Konfirmasi Password**
 3. Klik tombol **"Daftar"**
 4. Setelah berhasil, Anda akan diarahkan ke halaman login
 
 **Catatan:** 
-- Role Admin tidak tersedia untuk registrasi mandiri
 - Username harus unik (belum digunakan)
+- Role Admin memiliki akses penuh untuk mengelola sistem
 
 ---
 

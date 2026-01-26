@@ -337,7 +337,7 @@ Restos/
 | kitchen  | kitchen123 | Kitchen |
 | cashier  | cashier123 | Cashier |
 
-> **Note:** Password disimpan sebagai plain text di database.
+> **Note:** Password di-hash menggunakan SHA-256 sebelum disimpan di database untuk keamanan.
 
 ---
 

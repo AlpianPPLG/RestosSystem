@@ -83,10 +83,10 @@ public class RegisterController implements Initializable {
      */
     private void setupRoleComboBox() {
         roleComboBox.setItems(FXCollections.observableArrayList(
+                "Admin",
                 "Waiter",
                 "Kitchen",
                 "Cashier"));
-        // Note: Admin role is not available for self-registration
     }
 
     /**
